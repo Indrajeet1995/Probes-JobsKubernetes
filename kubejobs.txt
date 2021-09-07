@@ -1,0 +1,40 @@
+Investigation
+
+The initial investigation revolved around finding a way to run the pod for a specified amount of time as the original target was to find out how we can run a pod that contains the application until its license expires.
+
+There were three approaches that I found useful. Among which the first two failed to achieve the goal of running the pod for the required amount of time.A good hands on was done based on the documentation provided on the official Kubernetes site along with other sites specified below. Approaches used are as follows
+
+Jobs
+Cronjobs
+Probes
+
+
+
+Jobs:
+A job in Kubernetes is a supervisor for pods carrying out batch processes, that is, a process that runs for a certain time to completion, for example a calculation or a backup operation. The problem with kubernetes jobs is that it terminates the pod as soon as the command specified in it gets terminated thus it fails the objective we need to achieve.
+
+Cronjobs
+Cronjobs are very similar to Jobs. They are used for creating periodic and recurring jobs like sending Emails and taking backup from time to time. As It is evoked periodically it will become difficult to implement it to the best of my knowledge.
+
+Probes
+Liveness Probe
+	 Liveness probe tells the kubelet when to restart the pod, in case probe catches a deadlock while running and is unable to make progress it will tell kubelet to restart the pod.
+Readiness Probe
+ This Probe tells the kubelet when a pod is ready to accept the traffic. We can tell the kubelet to delay the check until the pod comes in running thus avoiding the possibility of giving fake pod restart triggers using the “initialDelaySeconds:” attribute.
+
+I also did a hands on probes using TCP where if the exposed port does not reach the TCP socket described in the liveness probe the pod will keep restarting.I think probes seems to be a more suitable approach to the best of my knowledge.
+
+
+
+
+https://kubernetes.io/docs/concepts/workloads/controllers/job/ 
+
+https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
+
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
+
+
+
+
+
